@@ -1,3 +1,15 @@
+
+---
+title: Medicure AI
+emoji: 🩺
+colorFrom: blue
+colorTo: green
+sdk: gradio
+app_file: app.py
+pinned: false
+---
+
+
 # Médicure AI — MedGuard Engine
 
 > **L'IA observe. Le professionnel de santé décide.**
