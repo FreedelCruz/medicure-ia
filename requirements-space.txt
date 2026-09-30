@@ -1,0 +1,15 @@
+# Dépendances de PRODUCTION pour le déploiement (Hugging Face Spaces / Docker).
+# Pas de pytest/jupyter/matplotlib ici : ils ne servent qu'en développement (voir requirements.txt).
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+torch==2.5.1
+torchvision==0.20.1
+torchxrayvision>=1.5.5
+
+numpy>=2.0
+scipy>=1.13
+pandas>=2.2
+pillow>=11.0
+opencv-python-headless>=4.11
+
+gradio>=6.28

@@ -1,4 +1,5 @@
 """Métriques d'évaluation utilisées par les notebooks 02 à 05 (numpy + scipy)."""
+
 from __future__ import annotations
 
 from typing import Callable

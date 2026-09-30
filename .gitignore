@@ -23,3 +23,9 @@ artifacts/robustness.csv
 demo_assets/*
 !demo_assets/.gitkeep
 !demo_assets/README.md
+
+env/
+.env/
+venv/
+.venv/
+__pycache__/

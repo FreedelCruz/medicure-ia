@@ -4,6 +4,7 @@
 L'interface affiche une bannière "MODE SIMULATION" tant que ``info['simulation']`` est vrai.
 Ne jamais utiliser ce prédicteur pour la démo finale devant le jury.
 """
+
 from __future__ import annotations
 
 from typing import Mapping, Optional, Sequence
@@ -41,7 +42,9 @@ class MockPredictor:
 
     def _derived(self, gray: np.ndarray) -> np.ndarray:
         """Scores continus dérivés de la luminosité de quelques zones (stables sous petites perturbations)."""
-        small = cv2.resize(center_crop_square(gray), (32, 32), interpolation=cv2.INTER_AREA).astype(np.float32)
+        small = cv2.resize(
+            center_crop_square(gray), (32, 32), interpolation=cv2.INTER_AREA
+        ).astype(np.float32)
         g_mean, g_std = small.mean(), small.std() + 1e-6
         zones = {
             "Effusion": small[20:, :].mean(),  # bas du thorax
@@ -58,7 +61,9 @@ class MockPredictor:
         rows = []
         for g in grays:
             if self._fixed is not None:
-                row = np.array([self._fixed.get(t, 0.1) for t in self.targets], dtype=float)
+                row = np.array(
+                    [self._fixed.get(t, 0.1) for t in self.targets], dtype=float
+                )
             else:
                 row = self._derived(g)
             if self._jitter > 0:
@@ -68,7 +73,11 @@ class MockPredictor:
 
     def explain(self, gray: np.ndarray, target: str) -> Optional[np.ndarray]:
         """Carte fictive : une tache gaussienne dont la position dépend de la pathologie."""
-        centers = {"Effusion": (0.75, 0.30), "Cardiomegaly": (0.55, 0.55), "Lung Opacity": (0.45, 0.72)}
+        centers = {
+            "Effusion": (0.75, 0.30),
+            "Cardiomegaly": (0.55, 0.55),
+            "Lung Opacity": (0.45, 0.72),
+        }
         cy, cx = centers.get(target, (0.5, 0.5))
         yy, xx = np.mgrid[0:INPUT_SIZE, 0:INPUT_SIZE] / float(INPUT_SIZE)
         blob = np.exp(-(((yy - cy) ** 2 + (xx - cx) ** 2) / (2 * 0.12**2)))

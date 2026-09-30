@@ -31,6 +31,10 @@ make notebooks-smoke               # exécute les 5 notebooks sur un faux datase
 
 Avec le vrai modèle : `pip install -e ".[model,app]"` puis `python -m app.gradio_app`.
 
+> **Note macOS (Intel) :** PyTorch ≥2.5 n'a pas de roues pré-compilées pour macOS x86_64.
+> Pour tester le vrai modèle localement sur Mac Intel : `pip install "numpy<2" "opencv-python-headless<4.12"`
+> puis `pip install -e ".[model,app]"`. Sur Mac Apple Silicon (arm64) et Linux, PyTorch 2.5.1 fonctionne avec NumPy 2.x.
+
 ## Structure
 
 ```
@@ -76,12 +80,9 @@ prédicteur simulé, audit, rapport, interface Gradio (appelée via HTTP), API F
 sur un faux dataset avec le prédicteur simulé.
 
 **NON vérifié — à faire dès que vous avez torch :**
-- `medguard/model.py` (`XRVPredictor`, Grad-CAM) : écrit d'après le code source de TorchXRayVision 1.5.4, mais jamais exécuté
-  ici (torch non installable dans mon environnement). Lancez `pytest tests/test_model_torch.py` : il utilise des poids aléatoires,
-  sans téléchargement, pour valider la plomberie.
+- `medguard/model.py` (`XRVPredictor`, Grad-CAM) : écrit d'après le code source de TorchXRayVision 1.5.5, compatible PyTorch 2.5.1. Lancez `pytest tests/test_model_torch.py` : il utilise des poids aléatoires, sans téléchargement, pour valider la plomberie.
 - Les notebooks sur **vraies données** : chemins Kaggle des datasets, temps de calcul, valeurs réelles.
-- **Tous les seuils** (`config.py`) sont des valeurs de départ. Ceux du contrôle qualité et du refus doivent être recalés
-  (notebooks 01 et 04). Les images synthétiques des tests n'ont pas les propriétés de vraies radios.
+- **Tous les seuils** (`config.py`) sont des valeurs de départ. Ceux du contrôle qualité et du refus doivent être recalés (notebooks 01 et 04). Les images synthétiques des tests n'ont pas les propriétés de vraies radios.
 - Aucun chiffre de performance n'est fourni : les sorties des notebooks exécutés ici sont **fictives**.
 
 ## Premières actions

@@ -5,6 +5,7 @@ proportions plausibles, symétrie gauche/droite. C'est un GARDE-FOU grossier, pa
 classifieur : à remplacer par un petit modèle "radio thoracique vs autre" entraîné sur
 Kaggle (voir notebooks/01_eda.ipynb) et branché via ``set_classifier``.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -70,18 +71,28 @@ def check_exam_type(img: Image.Image, min_confidence: float = 0.55) -> ExamCheck
 
     reasons: list[str] = []
     if s_color < 0.5:
-        reasons.append("L'image est en couleur : une radiographie est attendue en niveaux de gris.")
+        reasons.append(
+            "L'image est en couleur : une radiographie est attendue en niveaux de gris."
+        )
     if s_ratio == 0.0:
         reasons.append("Proportions inhabituelles pour une radiographie thoracique.")
     if s_sym < 0.3:
-        reasons.append("Structure peu symétrique : ne ressemble pas à une radiographie thoracique de face.")
+        reasons.append(
+            "Structure peu symétrique : ne ressemble pas à une radiographie thoracique de face."
+        )
 
     # Garde-fous durs : une image très colorée, aux proportions absurdes ou sans symétrie est refusée
     # même si la moyenne pondérée semble acceptable.
-    ok = confidence >= min_confidence and s_color >= 0.3 and s_ratio > 0 and s_sym >= 0.3
+    ok = (
+        confidence >= min_confidence and s_color >= 0.3 and s_ratio > 0 and s_sym >= 0.3
+    )
     return ExamCheck(
         is_chest_xray=ok,
         confidence=round(confidence, 3),
         reasons=[] if ok else reasons,
-        details={"colorfulness": round(color, 2), "aspect_ratio": round(ratio, 3), "lr_symmetry": round(sym, 3)},
+        details={
+            "colorfulness": round(color, 2),
+            "aspect_ratio": round(ratio, 3),
+            "lr_symmetry": round(sym, 3),
+        },
     )

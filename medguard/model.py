@@ -55,8 +55,8 @@ class XRVPredictor:
         except Exception as exc:
             raise RuntimeError(
                 f"PyTorch {torch.__version__} ne parvient pas à utiliser NumPy {np.__version__}. "
-                'Cause fréquente : torch compilé pour NumPy 1.x. Corrigez avec : pip install "numpy<2" '
-                '"opencv-python-headless<4.12" (puis relancez).'
+                "Sur Linux/Docker : utilisez PyTorch >=2.5 (déjà épinglé dans requirements). "
+                "Sur macOS Intel : pas de roue PyTorch >=2.5 dispo ; utilisez numpy<2 ou conda."
             ) from exc
 
         self._torch = torch
