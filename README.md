@@ -93,3 +93,4 @@ sur un faux dataset avec le prédicteur simulé.
 - [ ] Notebook 01 sur Kaggle → commiter `splits.json`
 - [ ] Notebooks 02 → 04 → commiter les artefacts, lire la courbe risque–couverture **avant** de rédiger le discours
 - [ ] Choisir et vérifier vos 5 images de démo avec le vrai modèle (`demo_assets/README.md`)
+# medicure-ia
